@@ -26,6 +26,7 @@ on:
 jobs:
   Trigger:
     if: github.repository == 'apache/flink'
+    timeout-minutes: 30
     permissions:
       actions: write
     concurrency:
@@ -37,10 +38,10 @@ jobs:
           - master
           - release-2.3
           - release-1.20
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           sparse-checkout: |
             .github/actions/last_workflow_run
@@ -53,7 +54,7 @@ jobs:
           branch: ${{ matrix.branch }}
 
       - name: Trigger Workflow
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           script: |
             const branch = '${{ matrix.branch }}';
